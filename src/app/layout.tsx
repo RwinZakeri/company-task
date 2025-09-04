@@ -1,3 +1,6 @@
+import Layout from "@/components/layout/layout";
+import { ClientContextProvider } from "@/context/clients/client";
+import AuthGuard from "@/hooks/guard/auth.guard";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -27,7 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ClientContextProvider>
+          <AuthGuard>
+            <Layout>{children}</Layout>
+          </AuthGuard>
+        </ClientContextProvider>
       </body>
     </html>
   );
